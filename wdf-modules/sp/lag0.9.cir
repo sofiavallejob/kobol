@@ -1,0 +1,10 @@
+lag
+V1 in 0 PWL(0 0 0.01 0 0.0100001 5)
+R1 in o 728238.2108364936
+C1 o 0 1e-06
+.tran 20u 1.2
+.control
+run
+wrdata sp/lag0.9.dat v(o)
+.endc
+.end

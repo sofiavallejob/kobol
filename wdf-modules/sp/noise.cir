@@ -1,0 +1,11 @@
+noise colour
+V1 in 0 AC 1
+R48 in a 1000.0
+C8 a b 1e-06
+C9 b 0 1e-08
+R50 b 0 100000.0
+.control
+ac dec 60 1 24000
+wrdata sp/noise.dat vdb(b)
+.endc
+.end

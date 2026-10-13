@@ -1,0 +1,14 @@
+lfo spice
+Bcmp qq 0 V = 13.5*tanh(200*(v(tri)+0.5*v(q)))
+Rd qq q 100
+Cd q 0 1n
+Rr q m 80558.18002124355
+C1 m tri 1e-06
+E1 tri 0 0 m 1e6
+.ic v(tri)=0 v(q)=13.5 v(qq)=13.5
+.tran 20u 6 uic
+.control
+run
+wrdata sp/lfo.dat v(tri)
+.endc
+.end

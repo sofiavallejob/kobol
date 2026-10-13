@@ -1,0 +1,40 @@
+scheme,method,n,snr_med,snr_ci,lsd_med
+col,black-box (v2),391,11.08,"[10.3, 11.7]",5.89
+col,black-box (v2) + residual,391,11.74,"[11.0, 12.4]",5.15
+col,grey-box,391,12.31,"[11.2, 13.0]",5.45
+col,grey-box + residual,391,11.78,"[10.9, 13.0]",5.8
+col,grey-box final,391,13.91,"[13.0, 14.6]",4.26
+col,grey-box final + residual,391,13.31,"[12.3, 14.6]",4.95
+col,linear interpolation of neighbours,391,11.99,"[11.3, 12.6]",5.0
+rand5,black-box (v2),437,12.72,"[12.1, 13.2]",5.82
+rand5,black-box (v2) + residual,437,14.56,"[13.9, 15.4]",6.24
+rand5,grey-box,437,16.42,"[16.0, 17.4]",3.91
+rand5,grey-box + residual,437,18.7,"[17.7, 19.6]",4.26
+rand5,grey-box +all,437,17.1,"[16.4, 17.7]",3.34
+rand5,grey-box +all + residual,437,18.96,"[17.5, 19.9]",4.14
+rand5,grey-box +lp2,437,16.75,"[16.2, 17.4]",3.38
+rand5,grey-box +lp2 + residual,437,18.38,"[17.4, 19.6]",4.27
+rand5,grey-box +reset,437,16.43,"[15.9, 17.4]",4.15
+rand5,grey-box +reset + residual,437,18.58,"[17.6, 19.6]",4.46
+rand5,grey-box +slew,437,16.46,"[15.7, 17.2]",3.99
+rand5,grey-box +slew + residual,437,18.15,"[17.2, 19.3]",4.3
+rand5,grey-box -chainHP,437,15.25,"[14.8, 15.9]",4.67
+rand5,grey-box -chainHP + residual,437,17.27,"[16.1, 18.1]",4.84
+rand5,grey-box -compB,437,16.04,"[15.2, 16.6]",4.69
+rand5,grey-box -compB + residual,437,17.37,"[16.3, 18.5]",4.88
+rand5,grey-box -lowpass,437,15.43,"[14.7, 16.0]",6.0
+rand5,grey-box -lowpass + residual,437,16.83,"[15.9, 17.8]",5.95
+rand5,grey-box -tri,437,16.25,"[15.7, 16.9]",5.59
+rand5,grey-box -tri + residual,437,17.73,"[17.2, 18.5]",5.14
+rand5,grey-box final,437,17.37,"[16.8, 17.7]",3.61
+rand5,grey-box final + residual,437,18.57,"[17.7, 19.4]",4.37
+rand5,grey-box l1,437,16.47,"[15.6, 17.1]",4.26
+rand5,grey-box l1 + residual,437,17.9,"[17.2, 19.0]",4.78
+rand5,linear interpolation of neighbours,434,13.56,"[12.9, 14.3]",6.2
+row,black-box (v2),399,13.15,"[12.4, 14.0]",6.56
+row,black-box (v2) + residual,399,16.12,"[15.0, 17.5]",6.22
+row,grey-box,399,17.35,"[16.6, 17.9]",4.19
+row,grey-box + residual,399,21.43,"[19.7, 22.4]",4.16
+row,grey-box final,399,17.56,"[16.9, 18.4]",3.58
+row,grey-box final + residual,399,21.46,"[20.0, 22.4]",4.07
+row,linear interpolation of neighbours,399,17.13,"[15.8, 18.9]",4.84

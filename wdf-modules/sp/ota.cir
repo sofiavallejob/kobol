@@ -1,0 +1,13 @@
+ota
+Vin in 0 0
+Rin in d 100000.0
+Rdiv d 0 220.0
+Bo 0 o I = 0.0002740740740740741*(tanh(v(d)/(2*0.02585))+0.002)
+Rl o 0 33000.0
+Cl o 0 1e-10
+.dc Vin -10 10 0.05
+.control
+run
+wrdata sp/ota.dat v(o)
+.endc
+.end

@@ -1,0 +1,13 @@
+otalfo
+Bc qq 0 V = 13.5*tanh(200*(0.5*v(q)-v(tri)))
+Rd qq q 100
+Cd q 0 1n
+Bo 0 tri I = 0.0005215268496717761*tanh(v(q)*0.002195170624625823/(2*0.02585))
+C1 tri 0 1e-07
+.ic v(tri)=0 v(q)=13.5 v(qq)=13.5
+.tran 5e-06 0.032 uic
+.control
+run
+wrdata sp/otalfo.dat v(tri)
+.endc
+.end
