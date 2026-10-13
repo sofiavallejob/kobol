@@ -1,0 +1,64 @@
+B2 r111 c 15: fc     68.2 K   6.09 g  -4.92 dB | osc err  -1.30 c +0.03 dB | input harm rms err 1.39 dB
+B2 r111 c 31: fc    145.0 K   6.87 g  -4.18 dB | osc err  -9.55 c -0.22 dB | input harm rms err 0.84 dB
+B2 r111 c 47: fc    318.5 K   7.37 g  -4.40 dB | osc err  +5.62 c -0.43 dB | input harm rms err 1.69 dB
+B2 r111 c 63: fc    703.1 K   8.98 g  -6.10 dB | osc err  -1.48 c +0.10 dB | input harm rms err 0.13 dB
+B2 r111 c 79: fc   1543.2 K   9.46 g  -6.44 dB | osc err  -0.02 c +0.00 dB | input harm rms err 0.04 dB
+B2 r111 c 95: fc   3325.7 K   7.82 g  -5.98 dB | osc err  -0.00 c +0.00 dB | input harm rms err 0.05 dB
+B2 r111 c111: fc   7325.5 K   8.80 g  -6.30 dB | osc err  +0.05 c -0.00 dB | input harm rms err 0.05 dB
+B2 r111 c127: fc  10804.8 K   4.21 g  -2.85 dB | osc err  +4.34 c -0.06 dB | input harm rms err 0.07 dB
+B2 r127 c 15: fc     69.4 K   7.47 g  -5.83 dB | osc err  +0.78 c -0.04 dB | input harm rms err 1.00 dB
+B2 r127 c 31: fc    149.6 K   8.43 g  -6.21 dB | osc err  +0.97 c -0.20 dB | input harm rms err 1.06 dB
+B2 r127 c 47: fc    326.8 K   9.03 g  -6.39 dB | osc err  +1.84 c -0.20 dB | input harm rms err 1.68 dB
+B2 r127 c 63: fc    727.4 K  10.97 g  -7.96 dB | osc err  -0.01 c -0.00 dB | input harm rms err 0.04 dB
+B2 r127 c 79: fc   1583.7 K  10.73 g  -7.98 dB | osc err  -0.01 c -0.00 dB | input harm rms err 0.02 dB
+B2 r127 c 95: fc   3404.5 K   9.07 g  -7.69 dB | osc err  +0.00 c -0.00 dB | input harm rms err 0.02 dB
+B2 r127 c111: fc   7405.8 K   8.97 g  -7.71 dB | osc err  -0.02 c -0.00 dB | input harm rms err 0.02 dB
+B2 r127 c127: fc  10879.1 K   4.73 g  -4.98 dB | osc err  +0.06 c -0.00 dB | input harm rms err 0.03 dB
+B3 r111 c 15: fc     67.7 K   5.88 g  -3.60 dB | osc err  -0.01 c +0.00 dB | input harm rms err 0.00 dB
+B3 r111 c 31: fc    145.6 K   6.72 g  -3.70 dB | osc err  -0.03 c -0.01 dB | input harm rms err 0.24 dB
+B3 r111 c 47: fc    319.3 K   7.76 g  -4.80 dB | osc err  +0.82 c -0.06 dB | input harm rms err 0.73 dB
+B3 r111 c 63: fc    699.0 K   7.76 g  -4.40 dB | osc err  +2.52 c -0.04 dB | input harm rms err 1.05 dB
+B3 r111 c 79: fc   1541.7 K   9.19 g  -6.13 dB | osc err  -0.68 c -0.03 dB | input harm rms err 0.22 dB
+B3 r111 c 95: fc   3315.5 K   7.13 g  -5.71 dB | osc err  +0.05 c -0.00 dB | input harm rms err 0.05 dB
+B3 r111 c111: fc   7348.8 K   8.79 g  -6.31 dB | osc err  -0.02 c +0.00 dB | input harm rms err 0.04 dB
+B3 r111 c127: fc  10825.5 K   4.25 g  -2.95 dB | osc err  -0.01 c +0.01 dB | input harm rms err 0.06 dB
+B3 r127 c 15: fc     69.2 K   7.26 g  -5.43 dB | osc err  +0.02 c +0.00 dB | input harm rms err 0.00 dB
+B3 r127 c 31: fc    150.4 K   9.02 g  -6.77 dB | osc err  -0.01 c -0.01 dB | input harm rms err 0.41 dB
+B3 r127 c 47: fc    328.0 K   9.35 g  -6.55 dB | osc err  +0.73 c +0.01 dB | input harm rms err 0.74 dB
+B3 r127 c 63: fc    718.9 K   9.52 g  -6.44 dB | osc err  +3.70 c +0.03 dB | input harm rms err 1.12 dB
+B3 r127 c 79: fc   1573.2 K  10.19 g  -7.66 dB | osc err  -3.83 c -0.01 dB | input harm rms err 0.28 dB
+B3 r127 c 95: fc   3373.3 K   8.00 g  -7.41 dB | osc err  -0.06 c -0.00 dB | input harm rms err 0.03 dB
+B3 r127 c111: fc   7234.4 K   6.41 g  -6.60 dB | osc err  +1.38 c -0.00 dB | input harm rms err 0.02 dB
+B3 r127 c127: fc  10919.8 K   5.77 g  -6.12 dB | osc err  -0.20 c -0.01 dB | input harm rms err 0.03 dB
+B4 r111 c 15: fc     67.5 K   5.19 g  -1.40 dB | osc err  -0.00 c -0.00 dB | input harm rms err nan dB
+B4 r111 c 31: fc    145.7 K   6.81 g  -3.86 dB | osc err  -0.01 c -0.00 dB | input harm rms err 0.00 dB
+B4 r111 c 47: fc    318.4 K   7.63 g  -4.56 dB | osc err  +0.09 c -0.00 dB | input harm rms err 0.20 dB
+B4 r111 c 63: fc    696.8 K   7.89 g  -4.79 dB | osc err  -0.02 c -0.16 dB | input harm rms err 0.95 dB
+B4 r111 c 79: fc   1527.2 K   4.16 g  -3.92 dB | osc err +49.40 c -1.49 dB | input harm rms err 13.10 dB
+B4 r111 c 95: fc   3299.5 K   7.16 g  -5.71 dB | osc err  +0.03 c -0.00 dB | input harm rms err 0.08 dB
+B4 r111 c111: fc   7261.8 K   8.33 g  -6.11 dB | osc err  -0.01 c -0.01 dB | input harm rms err 0.04 dB
+B4 r111 c127: fc  10878.0 K   4.18 g  -2.95 dB | osc err +20.13 c +0.00 dB | input harm rms err 0.05 dB
+B4 r127 c 15: fc     68.8 K   6.39 g  -3.76 dB | osc err  -0.00 c +0.00 dB | input harm rms err nan dB
+B4 r127 c 31: fc    150.0 K   8.68 g  -6.33 dB | osc err  +0.00 c +0.00 dB | input harm rms err 0.00 dB
+B4 r127 c 47: fc    326.0 K   8.97 g  -6.29 dB | osc err  +0.08 c -0.07 dB | input harm rms err 0.88 dB
+B4 r127 c 63: fc    715.9 K   9.58 g  -6.55 dB | osc err  +0.50 c +0.01 dB | input harm rms err 0.69 dB
+B4 r127 c 79: fc   1542.1 K   8.45 g  -5.73 dB | osc err  +1.18 c -0.17 dB | input harm rms err 1.20 dB
+B4 r127 c 95: fc   3382.0 K   8.98 g  -7.47 dB | osc err  -0.19 c -0.02 dB | input harm rms err 0.27 dB
+B4 r127 c111: fc   7130.9 K   5.76 g  -6.16 dB | osc err  +0.03 c -0.00 dB | input harm rms err 0.08 dB
+B4 r127 c127: fc  10945.7 K   7.95 g  -7.28 dB | osc err  -0.29 c -0.00 dB | input harm rms err 0.03 dB
+B5 r111 c 15: fc     67.5 K   5.14 g  -1.21 dB | osc err  +0.00 c -0.00 dB | input harm rms err nan dB
+B5 r111 c 31: fc    144.4 K   5.32 g  -0.09 dB | osc err  -0.00 c +0.00 dB | input harm rms err nan dB
+B5 r111 c 47: fc    317.0 K   7.34 g  -4.08 dB | osc err  +0.00 c +0.00 dB | input harm rms err 0.00 dB
+B5 r111 c 63: fc    692.4 K   7.40 g  -3.99 dB | osc err  +0.80 c -0.03 dB | input harm rms err 1.43 dB
+B5 r111 c 79: fc   1502.5 K   7.18 g  -3.67 dB | osc err  -2.47 c -0.04 dB | input harm rms err 2.52 dB
+B5 r111 c 95: fc   3279.7 K   6.94 g  -4.60 dB | osc err  +1.27 c -0.16 dB | input harm rms err 0.90 dB
+B5 r111 c111: fc   7159.5 K   7.55 g  -5.73 dB | osc err  -0.09 c -0.02 dB | input harm rms err 0.13 dB
+B5 r111 c127: fc  10670.1 K   4.21 g  -2.88 dB | osc err  -0.09 c -0.00 dB | input harm rms err 0.05 dB
+B5 r127 c 15: fc     68.8 K   6.38 g  -3.79 dB | osc err  +0.00 c -0.00 dB | input harm rms err nan dB
+B5 r127 c 31: fc    147.3 K   6.40 g  -2.70 dB | osc err  +0.00 c -0.00 dB | input harm rms err nan dB
+B5 r127 c 47: fc    323.9 K   8.40 g  -5.52 dB | osc err  -0.00 c -0.00 dB | input harm rms err 0.00 dB
+B5 r127 c 63: fc    714.5 K   9.77 g  -6.54 dB | osc err  -0.79 c +0.17 dB | input harm rms err 0.45 dB
+B5 r127 c 79: fc   1533.6 K   8.25 g  -4.97 dB | osc err  +2.97 c +0.11 dB | input harm rms err 2.59 dB
+B5 r127 c 95: fc   3304.9 K   7.15 g  -6.54 dB | osc err  -0.05 c -0.14 dB | input harm rms err 0.98 dB
+B5 r127 c111: fc   7097.3 K   6.08 g  -6.72 dB | osc err  +0.42 c +0.02 dB | input harm rms err 0.31 dB
+B5 r127 c127: fc  10939.1 K   8.66 g  -7.61 dB | osc err  -0.32 c +0.01 dB | input harm rms err 0.07 dB

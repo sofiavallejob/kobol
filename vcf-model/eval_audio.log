@@ -1,0 +1,11 @@
+/Users/sofiavallejo/.pyenv/versions/3.12.8/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3824: RuntimeWarning: Mean of empty slice
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/Users/sofiavallejo/.pyenv/versions/3.12.8/lib/python3.12/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+train hybrid  n=256 | r<=95: harm   nan dB, ESR median 0.0021 | r>=111: osc |cents| median    8.9, |level| 0.39 dB
+rand  hybrid  n=144 | r<=95: harm   nan dB, ESR median 0.0026 | r>=111: osc |cents| median    8.2, |level| 0.69 dB
+rand  interp  n=144 | r<=95: harm   nan dB, ESR median 0.0010 | r>=111: osc |cents| median    9.2, |level| 0.68 dB
+col   hybrid  n=192 | r<=95: harm   nan dB, ESR median 0.0019 | r>=111: osc |cents| median   11.2, |level| 0.62 dB
+col   interp  n=192 | r<=95: harm   nan dB, ESR median 0.0006 | r>=111: osc |cents| median    9.2, |level| 0.53 dB
+row   hybrid  n=192 | r<=95: harm   nan dB, ESR median 0.0100 | r>=111: osc |cents| median   11.0, |level| 1.92 dB
+row   interp  n=192 | r<=95: harm   nan dB, ESR median 0.0051 | r>=111: osc |cents| median   12.2, |level| 1.32 dB

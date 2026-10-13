@@ -1,0 +1,251 @@
+<title>Kobol VCF A/B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one narrow instrument column. Controls panel on top, two scope panels below, notes last. */
+:root{
+  --paper:#FAFAF8; --ink:#111111; --ink-2:#55565A; --line:#D6D6D2; --panel:#FFFFFF; --model:#7C7E84;
+  --display:"Archivo Narrow","Arial Narrow",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0E0E0F; --ink:#F2F2EF; --ink-2:#A3A4A8; --line:#2E2F32; --panel:#161618; --model:#9A9CA2; color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0E0E0F; --ink:#F2F2EF; --ink-2:#A3A4A8; --line:#2E2F32; --panel:#161618; --model:#9A9CA2; color-scheme:dark}
+body{background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:14px;line-height:1.5}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:28px 48px;display:grid;gap:20px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,40px);letter-spacing:.02em;text-transform:uppercase;margin:0;line-height:1.05;text-wrap:balance}
+.lede{margin:6px 0 0;color:var(--ink-2);max-width:64ch}
+.panel{background:var(--panel);border:1.5px solid var(--ink);border-radius:4px;padding:18px}
+.controls{display:grid;grid-template-columns:auto 1fr;gap:20px 28px;align-items:center}
+@media (max-width:620px){.controls{grid-template-columns:1fr}}
+.label{font-family:var(--display);text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--ink-2);margin:0 0 6px}
+.notes{display:flex;gap:6px;flex-wrap:wrap}
+.seg{font:500 14px var(--mono);background:transparent;color:var(--ink);border:1.5px solid var(--ink);border-radius:3px;padding:6px 12px;cursor:pointer}
+.seg[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.knobs{display:flex;gap:28px;flex-wrap:wrap}
+.knob{display:grid;justify-items:center;gap:4px;min-width:118px}
+.knob canvas{width:96px;height:96px;cursor:ns-resize;touch-action:none;border-radius:50%}
+.knob canvas:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.val{font-variant-numeric:tabular-nums;font-size:13px;text-align:center}
+.val small{display:block;color:var(--ink-2);font-size:11px}
+.play{display:flex;gap:8px;flex-wrap:wrap;align-items:center;grid-column:1/-1}
+.btn{font:500 14px var(--mono);border:1.5px solid var(--ink);border-radius:3px;padding:9px 14px;cursor:pointer;background:var(--panel);color:var(--ink);display:inline-flex;gap:8px;align-items:center}
+.btn.on{background:var(--ink);color:var(--paper)}
+.btn:focus-visible,.seg:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.swatch{display:inline-block;width:18px;height:0;border-top:2px solid var(--ink)}
+.swatch.m{border-top:2px dashed var(--model)}
+.status{color:var(--ink-2);font-size:12px;margin-left:auto}
+.scopes{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:720px){.scopes{grid-template-columns:1fr}}
+.scope{min-width:0}
+.scope canvas{width:100%;height:220px;display:block}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--ink-2);margin-top:8px;flex-wrap:wrap}
+.stats{display:flex;gap:28px;flex-wrap:wrap;border-top:1.5px solid var(--ink);padding-top:12px;margin-top:4px}
+.stat b{display:block;font:700 22px var(--display);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.stat span{font-size:11px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.1em}
+.foot{color:var(--ink-2);font-size:12px;max-width:72ch;margin:0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Kobol VCF · Recording vs model</h1>
+    <p class="lede">The RSF Kobol's SSM2040 filter, recorded on the real synth and modelled in code. Pick a note and turn the knobs, then play one, the other, or both in turn. The model never heard the setting you pick.</p>
+  </header>
+
+  <section class="panel controls" aria-label="Controls">
+    <div>
+      <p class="label">VCO note (saw)</p>
+      <div class="notes" id="notes"></div>
+    </div>
+    <div class="knobs">
+      <div class="knob"><p class="label">Cutoff</p><canvas id="kc" width="192" height="192" tabindex="0" role="slider" aria-label="Cutoff"></canvas><div class="val" id="vc"></div></div>
+      <div class="knob"><p class="label">Resonance</p><canvas id="kr" width="192" height="192" tabindex="0" role="slider" aria-label="Resonance"></canvas><div class="val" id="vr"></div></div>
+    </div>
+    <div class="play">
+      <button class="btn" id="pRec" type="button"><span class="swatch"></span>Play recording</button>
+      <button class="btn" id="pMod" type="button"><span class="swatch m"></span>Play model</button>
+      <button class="btn" id="pAB" type="button">A/B loop</button>
+      <button class="btn" id="pStop" type="button">Stop</button>
+      <span class="status" id="status">Press play to listen</span>
+    </div>
+  </section>
+
+  <section class="panel" aria-label="Comparison">
+    <div class="scopes">
+      <div class="scope"><p class="label">Waveform, two periods</p><canvas id="cw"></canvas></div>
+      <div class="scope"><p class="label">Spectrum (dB)</p><canvas id="cs"></canvas></div>
+    </div>
+    <div class="legend"><span><span class="swatch"></span> Recording (real synth)</span><span><span class="swatch m"></span> Model</span></div>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <p class="foot">Recordings: Álvaro Crespo's Kobol dataset (UPF, 2024), 4 notes × 8 cutoff × 8 resonance. Model: four OTA stages plus the CA3080 resonance limiter from the schematic, fed by the VCO sound rebuilt from the data. For each knob position, the knob-to-filter law was retrained without that position, so every sound here is a prediction. From resonance 111 the filter whistles by itself, which is the self-oscillation.</p>
+</div>
+
+<script>/*DATA*/</script>
+<script>
+(function(){
+'use strict';
+const D=DATA, STEPS=D.steps, NOTES=['B2','B3','B4','B5'];
+const S={note:'B3',ci:3,ri:3};
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const $=id=>document.getElementById(id);
+
+// ---------- SSM2040 model (same as dsp/kobol_vcf.h) ----------
+const sec=v=>{const a=v*v;return a<1e-6?1-a/3:Math.tanh(v)/v;};
+function filterRender(x,fs,fc,K,drive,gain,q){
+  const s=[0,0,0,0],v=[0,0,0,0],G=[0,0,0,0],yy=[0,0,0,0];let fb=0;const y=new Float32Array(x.length);
+  fc=Math.min(fc,0.45*fs);const g=Math.tan(Math.PI*fc/fs);
+  for(let n=0;n<x.length;n++){const xin=drive*x[n];
+    for(let it=0;it<2;it++){let a=1,b=0;
+      for(let i=0;i<4;i++){const gt=g*sec(v[i]);G[i]=gt/(1+gt);b=G[i]*b+(1-G[i])*s[i];a*=G[i];}
+      const Kt=K*sec(q*fb),u=(xin-Kt*b)/(1+Kt*a);let inp=u;
+      for(let i=0;i<4;i++){yy[i]=G[i]*inp+(1-G[i])*s[i];v[i]=inp-yy[i];inp=yy[i];}
+      fb=yy[3]; if(it===1)for(let i=0;i<4;i++)s[i]=2*yy[i]-s[i];}
+    y[n]=gain*yy[3]/drive;}
+  return y;
+}
+// VCO source rebuilt from the recordings: one-period wavetable per note
+const tables={};
+function table(note){
+  if(tables[note])return tables[note];
+  const N=8192,t=new Float32Array(N+1),src=D.notes[note];
+  for(let k=0;k<src.amp.length;k++){const A=src.amp[k],P=src.ph[k],w=2*Math.PI*(k+1)/N;
+    for(let i=0;i<N;i++)t[i]+=A*Math.cos(w*i+P);}
+  t[N]=t[0];return tables[note]=t;
+}
+const modelCache={};
+function renderModel(note,r,c){
+  const key=note+'_'+r+'_'+c; if(modelCache[key])return modelCache[key];
+  const fs=96000,settle=0.4,dur=1.2,n=Math.round((settle+dur)*fs),f0=D.notes[note].f0,t=table(note),N=t.length-1;
+  const x=new Float32Array(n);let ph=0;const inc=f0/fs*N;
+  for(let i=0;i<n;i++){const j=ph|0,u=ph-j;x[i]=t[j]+(t[j+1]-t[j])*u;ph+=inc;if(ph>=N)ph-=N;}
+  const p=D.params[r+'_'+c]; const y=filterRender(x,fs,p[0],p[1],D.drive,Math.pow(10,p[2]/20),D.q);
+  const m=Math.round(dur*D.sr),out=new Float32Array(m),o=Math.round(settle*fs);
+  for(let i=0;i<m;i++){const k=o+2*i;out[i]=0.25*y[k-1]+0.5*y[k]+0.25*y[k+1];}   // 96k -> 48k
+  const fade=Math.round(0.01*D.sr);for(let i=0;i<fade;i++){out[i]*=i/fade;out[m-1-i]*=i/fade;}
+  return modelCache[key]={buf:out,fc:p[0],K:p[1]};
+}
+// ---------- spectrum, same as the Python side (Blackman, N=32768, peak per log bin) ----------
+function fft(re,im){const n=re.length;
+  for(let i=1,j=0;i<n;i++){let b=n>>1;for(;j&b;b>>=1)j^=b;j^=b;if(i<j){[re[i],re[j]]=[re[j],re[i]];[im[i],im[j]]=[im[j],im[i]];}}
+  for(let len=2;len<=n;len<<=1){const a=-2*Math.PI/len,wr=Math.cos(a),wi=Math.sin(a);
+    for(let i=0;i<n;i+=len){let cr=1,ci=0;for(let k=0;k<len/2;k++){const p=i+k,q=p+len/2,tr=re[q]*cr-im[q]*ci,ti=re[q]*ci+im[q]*cr;
+      re[q]=re[p]-tr;im[q]=im[p]-ti;re[p]+=tr;im[p]+=ti;const t=cr*wr-ci*wi;ci=cr*wi+ci*wr;cr=t;}}}}
+function specBins(x){
+  const N=D.nfft,re=new Float64Array(N),im=new Float64Array(N);let ws=0;
+  for(let i=0;i<N;i++){const w=0.42-0.5*Math.cos(2*Math.PI*i/(N-1))+0.08*Math.cos(4*Math.PI*i/(N-1));re[i]=x[i]*w;ws+=w;}
+  fft(re,im);const out=new Array(D.nb).fill(-140),lf=Math.log(D.fmin),lr=Math.log(D.fmax/D.fmin);
+  for(let k=1;k<N/2;k++){const f=k*D.sr/N;if(f<D.fmin||f>=D.fmax)continue;const b=Math.floor((Math.log(f)-lf)/lr*D.nb);
+    const v=20*Math.log10(Math.hypot(re[k],im[k])/ws*2+1e-9);if(v>out[b])out[b]=v;}
+  return out.map(v=>Math.max(-140,v));
+}
+// ---------- knobs ----------
+function knob(cv,get,set,label){
+  const ctx=cv.getContext('2d');let drag=null;
+  function draw(){const i=get(),W=cv.width,c=W/2,R=W*0.36,a0=Math.PI*0.75,span=Math.PI*1.5,ink=css('--ink'),pan=css('--panel'),mut=css('--ink-2');
+    ctx.clearRect(0,0,W,W);
+    for(let k=0;k<8;k++){const a=a0+span*k/7;ctx.strokeStyle=k===i?ink:mut;ctx.lineWidth=k===i?5:2.5;ctx.beginPath();
+      ctx.moveTo(c+Math.cos(a)*(R+10),c+Math.sin(a)*(R+10));ctx.lineTo(c+Math.cos(a)*(R+22),c+Math.sin(a)*(R+22));ctx.stroke();}
+    ctx.fillStyle=ink;ctx.beginPath();ctx.arc(c,c,R,0,2*Math.PI);ctx.fill();
+    const a=a0+span*i/7;ctx.strokeStyle=pan;ctx.lineWidth=7;ctx.lineCap='round';ctx.beginPath();
+    ctx.moveTo(c+Math.cos(a)*R*0.25,c+Math.sin(a)*R*0.25);ctx.lineTo(c+Math.cos(a)*R*0.85,c+Math.sin(a)*R*0.85);ctx.stroke();
+    cv.setAttribute('aria-valuenow',STEPS[i]);cv.setAttribute('aria-valuetext',label(i));}
+  const step=d=>{const i=Math.max(0,Math.min(7,get()+d));if(i!==get()){set(i);update();}};
+  cv.addEventListener('pointerdown',e=>{drag={y:e.clientY,acc:0};cv.setPointerCapture(e.pointerId);});
+  cv.addEventListener('pointermove',e=>{if(!drag)return;drag.acc+=drag.y-e.clientY;drag.y=e.clientY;
+    while(drag.acc>18){step(1);drag.acc-=18;}while(drag.acc<-18){step(-1);drag.acc+=18;}});
+  cv.addEventListener('pointerup',()=>drag=null);cv.addEventListener('pointercancel',()=>drag=null);
+  cv.addEventListener('wheel',e=>{e.preventDefault();step(e.deltaY<0?1:-1);},{passive:false});
+  cv.addEventListener('keydown',e=>{if(e.key==='ArrowUp'||e.key==='ArrowRight'){step(1);e.preventDefault();}
+    if(e.key==='ArrowDown'||e.key==='ArrowLeft'){step(-1);e.preventDefault();}});
+  cv.setAttribute('aria-valuemin',STEPS[0]);cv.setAttribute('aria-valuemax',STEPS[7]);
+  return draw;
+}
+const fmtHz=f=>f>=1000?(f/1000).toFixed(f>=10000?1:2)+' kHz':Math.round(f)+' Hz';
+const drawKC=knob($('kc'),()=>S.ci,i=>S.ci=i,i=>'MIDI '+STEPS[i]);
+const drawKR=knob($('kr'),()=>S.ri,i=>S.ri=i,i=>'MIDI '+STEPS[i]);
+NOTES.forEach(n=>{const b=document.createElement('button');b.className='seg';b.type='button';b.textContent=n;
+  b.addEventListener('click',()=>{S.note=n;update();});$('notes').appendChild(b);});
+
+// ---------- plots ----------
+function setup(cv){const r=cv.getBoundingClientRect(),dpr=window.devicePixelRatio||1;cv.width=Math.max(10,r.width*dpr);cv.height=r.height*dpr;
+  const g=cv.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);return [g,r.width,r.height];}
+function axes(g,W,H,pad){g.strokeStyle=css('--line');g.lineWidth=1;g.strokeRect(pad.l,pad.t,W-pad.l-pad.r,H-pad.t-pad.b);}
+function drawWave(rec,mod){
+  const [g,W,H]=setup($('cw')),pad={l:8,r:8,t:8,b:8};g.clearRect(0,0,W,H);axes(g,W,H,pad);
+  const L=rec.length,mx=Math.max(1e-3,...rec.map(Math.abs),...mod.map(Math.abs))*1.1;
+  const X=i=>pad.l+(W-pad.l-pad.r)*i/(L-1),Y=v=>pad.t+(H-pad.t-pad.b)*(0.5-0.5*v/mx);
+  g.strokeStyle=css('--line');g.beginPath();g.moveTo(pad.l,Y(0));g.lineTo(W-pad.r,Y(0));g.stroke();
+  const line=(a,col,dash,w)=>{g.strokeStyle=col;g.lineWidth=w;g.setLineDash(dash);g.beginPath();a.forEach((v,i)=>i?g.lineTo(X(i),Y(v)):g.moveTo(X(i),Y(v)));g.stroke();g.setLineDash([]);};
+  line(rec,css('--ink'),[],2);line(mod,css('--model'),[6,4],2);
+}
+function drawSpec(sr,sm){
+  const [g,W,H]=setup($('cs')),pad={l:34,r:8,t:8,b:22};g.clearRect(0,0,W,H);axes(g,W,H,pad);
+  const lo=-100,hi=0,X=b=>pad.l+(W-pad.l-pad.r)*b/(D.nb-1),Y=v=>pad.t+(H-pad.t-pad.b)*(hi-Math.max(lo,Math.min(hi,v)))/(hi-lo);
+  g.fillStyle=css('--ink-2');g.font='11px '+css('--mono');g.textAlign='right';g.textBaseline='middle';
+  for(let v=0;v>=-100;v-=25){g.fillText(v,pad.l-5,Y(v));g.strokeStyle=css('--line');g.beginPath();g.moveTo(pad.l,Y(v));g.lineTo(W-pad.r,Y(v));g.stroke();}
+  g.textAlign='center';g.textBaseline='top';
+  [100,1000,10000].forEach(f=>{const b=Math.log(f/D.fmin)/Math.log(D.fmax/D.fmin)*D.nb;g.fillText(f>=1000?f/1000+'k':f,X(b),H-pad.b+5);});
+  const line=(a,col,dash,w)=>{g.strokeStyle=col;g.lineWidth=w;g.setLineDash(dash);g.beginPath();a.forEach((v,i)=>i?g.lineTo(X(i),Y(v)):g.moveTo(X(i),Y(v)));g.stroke();g.setLineDash([]);};
+  line(sr,css('--ink'),[],1.6);line(sm,css('--model'),[5,3],1.6);
+}
+function peakHz(spec){let b=0;for(let i=1;i<spec.length;i++)if(spec[i]>spec[b])b=i;return D.fmin*Math.pow(D.fmax/D.fmin,(b+0.5)/D.nb);}
+
+// ---------- update ----------
+let cur=null;
+function update(){
+  const r=STEPS[S.ri],c=STEPS[S.ci],key=S.note+'_'+r+'_'+c,R=D.rec[key],M=renderModel(S.note,r,c);
+  document.querySelectorAll('#notes .seg').forEach(b=>b.setAttribute('aria-pressed',b.textContent===S.note));
+  $('vc').innerHTML='MIDI '+c+'<small>'+(c*10/127).toFixed(2)+' V · '+fmtHz(M.fc)+'</small>';
+  $('vr').innerHTML='MIDI '+r+'<small>'+(r>=111?'whistles (self-osc.)':'K = '+M.K.toFixed(2))+'</small>';
+  drawKC();drawKR();
+  const rec=R.wave.map(v=>v/1000),per=Math.round(D.sr/D.notes[S.note].f0),L=Math.min(2*per,rec.length-per-1),rw=rec.slice(0,L);
+  const m=M.buf,start=Math.round(0.2*D.sr);let best=0,bestE=Infinity;
+  for(let s=0;s<per;s++){let e=0;for(let i=0;i<L;i+=2){const d=m[start+s+i]-rw[i];e+=d*d;}if(e<bestE){bestE=e;best=s;}}
+  const mw=Array.from(m.subarray(start+best,start+best+L));
+  drawWave(rw,mw);
+  const sm=specBins(m.subarray(Math.round(0.2*D.sr))),sr=R.spec;drawSpec(sr,sm);
+  let n=0,sum=0;for(let i=0;i<sr.length;i++)if(sr[i]>-60){sum+=Math.abs(sr[i]-sm[i]);n++;}
+  const rms=a=>Math.sqrt(a.reduce((s,v)=>s+v*v,0)/a.length),lv=20*Math.log10(rms(mw)/rms(rw));
+  let html=`<div class="stat"><b>${(sum/Math.max(1,n)).toFixed(1)} dB</b><span>avg spectrum difference (peaks above −60 dB)</span></div>`+
+           `<div class="stat"><b>${lv>=0?'+':''}${lv.toFixed(1)} dB</b><span>level, model vs recording</span></div>`;
+  if(r>=111){const pm=peakHz(sm),pr=R.osc,cents=1200*Math.log2(pm/pr);
+    html+=`<div class="stat"><b>${fmtHz(pr)} / ${fmtHz(pm)}</b><span>whistle pitch, rec / model</span></div>`;}
+  $('stats').innerHTML=html;
+  cur={key,model:M.buf};
+  if(playing)startPlay(playing,true);
+}
+
+// ---------- audio ----------
+let ctx=null,srcNode=null,playing=null,abTimer=null;const recBufs={};
+function b64(s){const bin=atob(s),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return u.buffer;}
+async function recBuffer(key){if(!recBufs[key])recBufs[key]=await ctx.decodeAudioData(b64(D.rec[key].mp3));return recBufs[key];}
+function modelBuffer(){const b=ctx.createBuffer(1,cur.model.length,D.sr);b.copyToChannel(cur.model,0);return b;}
+function stopSrc(){if(srcNode){try{srcNode.stop();}catch(e){}srcNode=null;}}
+function setStatus(t){$('status').textContent=t;['pRec','pMod','pAB'].forEach(id=>$(id).classList.toggle('on',
+  (id==='pRec'&&playing==='rec')||(id==='pMod'&&playing==='mod')||(id==='pAB'&&playing==='ab')));}
+async function playOne(which,loop){
+  stopSrc();const buf=which==='rec'?await recBuffer(cur.key):modelBuffer();
+  const s=ctx.createBufferSource();s.buffer=buf;s.loop=loop;const g=ctx.createGain();g.gain.value=1.4;s.connect(g).connect(ctx.destination);s.start();srcNode=s;
+  return buf.duration;
+}
+async function startPlay(mode,keep){
+  if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();
+  if(ctx.state!=='running')await ctx.resume();
+  clearTimeout(abTimer);playing=mode;
+  if(mode==='ab'){let side=keep&&abSide?abSide:'rec';
+    const tick=async()=>{if(playing!=='ab')return;abSide=side;setStatus(side==='rec'?'A/B: now the recording':'A/B: now the model');
+      const d=await playOne(side,false);side=side==='rec'?'mod':'rec';abTimer=setTimeout(tick,d*1000+250);};
+    tick();}
+  else{await playOne(mode,true);setStatus(mode==='rec'?'Playing the recording (loop)':'Playing the model (loop)');}
+}
+let abSide=null;
+$('pRec').onclick=()=>startPlay('rec');$('pMod').onclick=()=>startPlay('mod');$('pAB').onclick=()=>startPlay('ab');
+$('pStop').onclick=()=>{playing=null;clearTimeout(abTimer);stopSrc();setStatus('Stopped');};
+window.addEventListener('resize',()=>update());
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>update());
+update();
+})();
+</script>
