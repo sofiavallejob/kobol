@@ -1,24 +1,55 @@
 # Back to the Kobol
 
-vco-greybox/    Learned grey-box VCO (the machine-learning part)
-  f0refine.py, extract.py      re-estimated f0, 256 harmonics per recording
-  pitchphys2.py, pitch_cv.py   physical pitch law + CV offsets, cross-validation, thesis PU baseline
-  exp.py                       grey-box waveshaper (GB) and black-box baseline (BB), all variants, CV harness
-  analyze.py, evalraw.py, seeds.py   metrics, bootstrap CIs, raw-WAV evaluation, seed variability
-  trainfinal.py                trains the final model on all data and exports the web bundle
-  final_full.pt                trained final grey-box model (PyTorch state dict)
-  pitch_phys_full.npy          fitted pitch-law parameters (5 + 23 CV offsets)
-  engine4.js                   the same model in JavaScript (verified equal to PyTorch)
-  kobol_vco_web_bundle*.json   weights + measured harmonics for the browser (with / without audio clips)
-  kobol_vco_pipeline.ipynb     notebook running the whole pipeline
-  RESULTS.md, *.csv, figs/     all numbers and figures
-  (older v1/v2 scripts are kept for history: train3.py, stoch.py, jit.py, noise.py, clips.py)
+A collection of models, experiments, and browser-based prototypes for reconstructing and analyzing the Kobol synthesizer. The project includes machine-learning-based grey-box models, white-box circuit models, validation tools, and an interactive voice prototype.
 
-wdf-modules/    White-box models: LFO (CA3080), voltage-processor lag, CA3080 VCAs, MM5837 noise
-  wdf.py, wdf.js, validate.py, validate2.py, sp/ (ngspice netlists), validation json, figs
+## Project Structure
 
-prototype/      voice-prototype.html (self-contained, open in a browser) + its JS sources
-                vcf.js (generated): VCF + SSM2050 ADS1/ADS2; backup-before-vcf/ = page before the VCF was added
+### `vco-greybox/` — VCO Grey-Box Modeling
 
-vcf-model/      VCF (SSM2040) neural grey-box, learned from Kobol_VCO_static. See vcf-model/README.md for why the
-                thesis models failed and the results (held-out waveform ESR about -26 dB vs about -0.2 dB in the thesis)
+Machine-learning-based VCO modeling, pitch refinement, evaluation, and browser deployment.
+
+| File / Directory | Description |
+|---|---|
+| `f0refine.py`, `extract.py` | Fundamental-frequency re-estimation and extraction of 256 harmonics per recording. |
+| `pitchphys2.py`, `pitch_cv.py` | Physical pitch law, cross-validation offsets, and thesis baseline. |
+| `exp.py` | Grey-box waveshaper (GB), black-box baseline (BB), model variants, and cross-validation harness. |
+| `analyze.py`, `evalraw.py`, `seeds.py` | Evaluation metrics, bootstrap confidence intervals, raw-WAV evaluation, and seed variability. |
+| `trainfinal.py` | Trains the final model on the complete dataset and exports the browser bundle. |
+| `final_full.pt` | Trained grey-box model weights (PyTorch state dictionary). |
+| `pitch_phys_full.npy` | Fitted pitch-law parameters, including 23 cross-validation offsets. |
+| `engine4.js` | JavaScript implementation of the model, verified against PyTorch. |
+| `kobol_vco_web_bundle*.json` | Browser-ready model weights and measured harmonics, with optional audio clips. |
+| `kobol_vco_pipeline.ipynb` | Notebook covering the complete modeling pipeline. |
+| `RESULTS.md`, `*.csv`, `figs/` | Experimental results, evaluation data, and figures. |
+
+Historical scripts from earlier versions are retained for reference: `train3.py`, `stoch.py`, `jit.py`, `noise.py`, and `clips.py`.
+
+### `wdf-modules/` — White-Box Circuit Models
+
+White-box models of individual synthesizer components:
+
+- LFO based on the CA3080.
+- Voltage-processor lag.
+- CA3080-based VCAs.
+- MM5837 noise generator.
+
+Includes Python and JavaScript implementations (`wdf.py`, `wdf.js`), validation scripts, `sp/` with ngspice netlists, validation results in JSON, and figures.
+
+### `prototype/` — Interactive Voice Prototype
+
+A self-contained browser-based synthesizer prototype.
+
+- `voice-prototype.html` — Main prototype; open directly in a browser.
+- JavaScript source files for the prototype.
+- `vcf.js` — Generated VCF implementation, including the SSM2050 ADS1/ADS2 envelope generators.
+- `backup-before-vcf/` — Snapshot of the prototype before the VCF was added.
+
+### `vcf-model/` — VCF Grey-Box Modeling
+
+Neural grey-box modeling of the SSM2040 voltage-controlled filter, trained using `Kobol_VCO_static`.
+
+See [`vcf-model/README.md`](vcf-model/README.md) for the modeling methodology, an analysis of why the thesis models failed, and the evaluation results. The final model achieves a held-out waveform error-to-signal ratio (ESR) of approximately **−26 dB**, compared with approximately **−0.2 dB** for the thesis models.
+
+## Reproducibility and Evaluation
+
+The project includes training and evaluation scripts, cross-validation experiments, raw audio comparisons, circuit simulations, and browser-ready model exports. Refer to the README files within individual directories for component-specific details and results.
